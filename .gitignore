@@ -1,0 +1,6 @@
+
+node_modules
+node_modules/
+informations_udit.txt
+config/config.env
+*.env
