@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"start": "nodemon src/index.js",
+		"start": "nodemon index.js",
 		"deploy": "node src/index.js",
 		"lint": "eslint .",
 		"lint:fix": "eslint . --fix",
@@ -33,4 +33,3 @@
 		"validator": "^13.7.0"
 	}
 }
-

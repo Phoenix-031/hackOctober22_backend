@@ -3,14 +3,14 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
-const connectDb = require("../config/db");
+const connectDb = require("./config/db");
 
-const authRoutes = require("../routes/auth.routes");
-const fileRoutes = require("../routes/file.routes");
-const userRoutes = require("../routes/user.routes");
-const listRoutes = require("../routes/general.routes");
+const authRoutes = require("./routes/auth.routes");
+const fileRoutes = require("./routes/file.routes");
+const userRoutes = require("./routes/user.routes");
+const listRoutes = require("./routes/general.routes");
 
-const errorHandler = require("../middlewares/error.middleware");
+const errorHandler = require("./middlewares/error.middleware");
 
 //setting up config config file paths
 dotenv.config({ path: "./config/config.env" });
