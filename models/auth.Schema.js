@@ -31,7 +31,7 @@ const authSchema = mongoose.Schema(
 
 		profilePic: {
 			type: String,
-			default: "some url",
+			default: "https://res.cloudinary.com/drwrctrgz/image/upload/v1667125709/uploadedFiles/user_a2eyol.png",
 		},
 
 		resetPasswordToken: String,
