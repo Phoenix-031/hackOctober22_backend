@@ -1,6 +1,8 @@
 const User = require("../models/auth.Schema");
 const ErrorResponse = require("../utils/errResponse");
 const sendEmail = require("../utils/sendEmail");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 const getUser = async (req, res, next) => {
 	const userId = req.params.id;
@@ -25,22 +27,28 @@ const getUser = async (req, res, next) => {
 
 //for admin as well as user
 const updateUser = async (req, res, next) => {
-	if (req.body.userId === req.params.id) {
-		// if (req.body.password) {
-		// 	// req.body.password = CryptoJS.AES.encrypt(req.body.password, process.env.SECRET_PHRASE).toString();
-		// }
+	console.log(req.body);
+	const decodedparam = jwt.verify(req.params.id, process.env.JWT_SECRET);
+	const decodedUserid = jwt.verify(req.body.userId, process.env.JWT_SECRET);
+
+	// console.log(decodedUserid, decodedparam);
+	if (decodedparam.id === decodedUserid.id) {
+		const salt = await bcrypt.genSalt(5);
+		if (req.body.password) {
+			req.body.password = await bcrypt.hash(req.body.password, salt);
+		}
 
 		try {
-			const updatedUser = await User.findByIdAndUpdate(
-				req.params.id,
+			const user = await User.findByIdAndUpdate(
+				decodedparam.id,
 				{
 					$set: req.body,
 				},
 				{ new: true }
 			);
 
-			// console.log(updatedUser)
-			const { password, ...updated } = updatedUser._doc;
+			console.log(user);
+			const { password, ...updated } = user._doc;
 			res.status(200).json({
 				success: true,
 				updated,

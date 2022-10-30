@@ -32,7 +32,7 @@ app.get("/", (req, res) => {
 });
 app.use("/api/auth", authRoutes);
 app.use("/api/files", fileRoutes);
-app.use("/api/users", userRoutes);
+app.use("/api/user", userRoutes);
 app.use("/api/list", listRoutes);
 // app.get("*", checkUser); // using checkUser middleware for checking current user
 
