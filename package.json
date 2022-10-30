@@ -1,7 +1,7 @@
 {
 	"name": "backend",
 	"version": "1.0.0",
-	"description": "",
+	"description": "**flow of website**\r https://whimsical.com/flow-qsbank-web-MYMkxpMDgaEC6yrpsZCrCx",
 	"main": "index.js",
 	"scripts": {
 		"start": "nodemon index.js",
@@ -10,15 +10,22 @@
 		"lint:fix": "eslint . --fix",
 		"prepare": "husky install"
 	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Phoenix-031/hackOctober22_backend.git"
+	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
-	"devDependencies": {
+	"bugs": {
+		"url": "https://github.com/Phoenix-031/hackOctober22_backend/issues"
+	},
+	"homepage": "https://github.com/Phoenix-031/hackOctober22_backend#readme",
+	"dependencies": {
 		"bcrypt": "^5.1.0",
 		"body-parser": "^1.20.1",
 		"cloudinary": "^1.32.0",
 		"cors": "^2.8.5",
-		"crypto-js": "^4.1.1",
 		"dotenv": "^16.0.3",
 		"eslint": "^8.26.0",
 		"express": "^4.18.2",
@@ -33,3 +40,4 @@
 		"validator": "^13.7.0"
 	}
 }
+
