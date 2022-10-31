@@ -26,13 +26,13 @@ const registerUser = async (req, res, next) => {
 	const existingUserEmail = await User.findOne({ email });
 	const existingUsername = await User.findOne({ username });
 	if (existingUserEmail) {
-		res.status(400).json({
+		res.status(200).json({
 			success: false,
 			msg: "Email not available for registration",
 		});
 		return;
 	} else if (existingUsername) {
-		res.status(400).json({
+		res.status(200).json({
 			success: false,
 			msg: "Username already in use",
 		});
