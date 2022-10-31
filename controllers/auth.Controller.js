@@ -40,7 +40,7 @@ const registerUser = async (req, res, next) => {
 	}
 
 	try {
-		await sendEmail({
+		sendEmail({
 			to: email,
 			subject: "Verify Email",
 			text: message,
@@ -226,7 +226,7 @@ const resetpassword = async (req, res, next) => {
 
 		res.status(201).json({
 			success: true,
-			msg: "Password reset successfully",
+			msg: "Password reset successfull",
 		});
 	} catch (err) {
 		next(err);

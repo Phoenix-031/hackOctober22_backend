@@ -38,7 +38,7 @@ const addFile = async (req, res, next) => {
 				savedupload,
 			});
 		} else {
-			return new ErrorResponse("File could not be uploaded", 400);
+			return new ErrorResponse("File could not be uploaded", 200);
 		}
 	} catch (err) {
 		next(err);
