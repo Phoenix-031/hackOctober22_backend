@@ -128,7 +128,11 @@ const loginUser = async (req, res, next) => {
 		}
 
 		if (!getuser.isVerified) {
-			return next(new ErrorResponse("No such user exists", 404));
+			// return next(new ErrorResponse("No such user exists", 404));
+			res.status(404).send({
+				success: false,
+				error: "No such user exists",
+			});
 		}
 		console.log(getuser);
 
