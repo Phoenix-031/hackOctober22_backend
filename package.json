@@ -4,7 +4,7 @@
 	"description": "**flow of website**\r https://whimsical.com/flow-qsbank-web-MYMkxpMDgaEC6yrpsZCrCx",
 	"main": "index.js",
 	"scripts": {
-		"start": "nodemon index.js",
+		"start": "node index.js",
 		"deploy": "node src/index.js",
 		"lint": "eslint .",
 		"lint:fix": "eslint . --fix",
@@ -40,4 +40,3 @@
 		"validator": "^13.7.0"
 	}
 }
-
