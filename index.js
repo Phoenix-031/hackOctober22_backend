@@ -21,12 +21,12 @@ const app = express();
 // console.log(process.env);
 
 //middlewares
-app.use(cors);
-app.use(function (req, res, next) {
-	res.header("Access-Control-Allow-Origin", "https://symphonious-dusk-29c5c1.netlify.app");
-	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-	next();
-});
+app.use(cors());
+// app.use(function (req, res, next) {
+// 	res.header("Access-Control-Allow-Origin", "https://symphonious-dusk-29c5c1.netlify.app");
+// 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+// 	next();
+// });
 app.use(bodyParser.json({ limit: "100mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(express.json());
