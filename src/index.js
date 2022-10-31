@@ -13,7 +13,7 @@ const listRoutes = require("../routes/general.routes");
 const errorHandler = require("../middlewares/error.middleware");
 
 //setting up config config file paths
-dotenv.config({ path: "./config/config.env" });
+dotenv.config({ path: "../config/config.env" });
 
 connectDb();
 
