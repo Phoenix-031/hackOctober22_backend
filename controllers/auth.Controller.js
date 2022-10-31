@@ -136,7 +136,7 @@ const loginUser = async (req, res, next) => {
 		// console.log(auth);
 
 		if (auth) {
-			sendToken(getuser, 200, res);
+			sendLoginToken(getuser, 200, res);
 		} else {
 			return next(new ErrorResponse("Wrong Credentials", 401));
 		}
@@ -298,6 +298,14 @@ const handelErrors = (err) => {
 
 const sendToken = (user, statusCode, res) => {
 	const accessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
+	res.status(statusCode).json({
+		success: true,
+		accessToken,
+	});
+};
+
+const sendLoginToken = (user, statusCode, res) => {
+	const accessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_LOGIN_EXPIRE });
 	res.status(statusCode).json({
 		success: true,
 		accessToken,

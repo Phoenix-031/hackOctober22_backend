@@ -1,9 +1,13 @@
 const User = require("../models/auth.Schema");
 const ErrorResponse = require("../utils/errResponse");
 const sendEmail = require("../utils/sendEmail");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const cloudinary = require("cloudinary");
 
 const getUser = async (req, res, next) => {
-	const userId = req.params.id;
+	const decode = jwt.verify(req.params.id, process.env.JWT_SECRET);
+	const userId = decode.id;
 
 	try {
 		const user = await User.findById(userId);
@@ -23,30 +27,105 @@ const getUser = async (req, res, next) => {
 	}
 };
 
+const updatePic = async (req, res, next) => {
+	const decode = jwt.verify(req.params.id, process.env.JWT_SECRET);
+	const userId = decode.id;
+
+	// console.log(req.body);
+
+	const profilePic = req.body.picture;
+
+	const uploadToCloudinary = await cloudinary.uploader.upload(profilePic, {
+		upload_preset: "fklkso3m",
+	});
+
+	try {
+		if (uploadToCloudinary) {
+			const { url } = uploadToCloudinary;
+
+			const user = await User.findById(userId);
+			if (user) {
+				user.profilePic = url;
+				await user.save();
+
+				res.status(200).json({
+					success: true,
+					profileimg: user.profilePic,
+				});
+			} else {
+				res.json({
+					success: false,
+					message: "No such user found",
+				});
+			}
+		} else {
+			res.json({
+				success: false,
+				message: "Upload to cloudinary failed",
+			});
+		}
+	} catch (err) {
+		next(err);
+	}
+};
+
 //for admin as well as user
 const updateUser = async (req, res, next) => {
-	if (req.body.userId === req.params.id) {
-		// if (req.body.password) {
-		// 	// req.body.password = CryptoJS.AES.encrypt(req.body.password, process.env.SECRET_PHRASE).toString();
-		// }
+	// console.log(req.body);
+	const decodedparam = jwt.verify(req.params.id, process.env.JWT_SECRET);
+	const decodedUserid = jwt.verify(req.body.userId, process.env.JWT_SECRET);
+
+	// console.log(decodedUserid, decodedparam);
+	if (decodedparam.id === decodedUserid.id) {
+		const salt = await bcrypt.genSalt(5);
+		if (req.body.password) {
+			req.body.password = await bcrypt.hash(req.body.password, salt);
+		}
+
+		if (req.body.username) {
+			const user = await User.findOne({ username: req.body.username });
+			console.log(user);
+			if (user) {
+				res.json({
+					success: false,
+					msg: "Username already exists",
+				});
+			} else {
+				const user = await User.findByIdAndUpdate(
+					decodedparam.id,
+					{
+						$set: req.body,
+					},
+					{ new: true }
+				);
+
+				// console.log(user);
+				const { password, ...updated } = user._doc;
+				res.status(200).json({
+					success: true,
+					updated,
+				});
+			}
+			return;
+		}
 
 		try {
-			const updatedUser = await User.findByIdAndUpdate(
-				req.params.id,
+			const user = await User.findByIdAndUpdate(
+				decodedparam.id,
 				{
 					$set: req.body,
 				},
 				{ new: true }
 			);
 
-			// console.log(updatedUser)
-			const { password, ...updated } = updatedUser._doc;
+			// console.log(user);
+			const { password, ...updated } = user._doc;
 			res.status(200).json({
 				success: true,
 				updated,
 			});
 		} catch (err) {
-			req.status(500).json({
+			res.status(500).json({
 				success: false,
 				msg: err,
 			});
@@ -96,4 +175,4 @@ const getAllUsers = async (req, res, next) => {
 	}
 };
 
-module.exports = { getAllUsers, getUser, deleteUser, updateUser };
+module.exports = { getAllUsers, getUser, deleteUser, updateUser, updatePic };

@@ -3,17 +3,18 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
-const connectDb = require("../config/db");
+const connectDb = require("./config/db");
 
-const authRoutes = require("../routes/auth.routes");
-const fileRoutes = require("../routes/file.routes");
-const userRoutes = require("../routes/user.routes");
-const listRoutes = require("../routes/general.routes");
+const authRoutes = require("./routes/auth.routes");
+const fileRoutes = require("./routes/file.routes");
+const userRoutes = require("./routes/user.routes");
+const listRoutes = require("./routes/general.routes");
+const filterRoutes = require("./routes/filter.routes");
 
-const errorHandler = require("../middlewares/error.middleware");
+const errorHandler = require("./middlewares/error.middleware");
 
 //setting up config config file paths
-dotenv.config({ path: "../config/config.env" });
+dotenv.config({ path: "./config/config.env" });
 
 connectDb();
 
@@ -22,7 +23,7 @@ const app = express();
 
 //middlewares
 app.use(cors());
-app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.json({ limit: "100mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(express.json());
 
@@ -32,8 +33,9 @@ app.get("/", (req, res) => {
 });
 app.use("/api/auth", authRoutes);
 app.use("/api/files", fileRoutes);
-app.use("/api/users", userRoutes);
+app.use("/api/user", userRoutes);
 app.use("/api/list", listRoutes);
+app.use("/api/filter", filterRoutes);
 // app.get("*", checkUser); // using checkUser middleware for checking current user
 
 app.use(errorHandler);
