@@ -124,7 +124,7 @@ const loginUser = async (req, res, next) => {
 		}
 
 		if (!getuser) {
-			return next(new ErrorResponse("No such user exists", 404));
+			return next(new ErrorResponse("No such user exists", 200));
 		}
 
 		if (!getuser.isVerified) {
