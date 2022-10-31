@@ -128,11 +128,11 @@ const loginUser = async (req, res, next) => {
 		}
 
 		if (!getuser.isVerified) {
-			// return next(new ErrorResponse("No such user exists", 404));
-			res.status(404).send({
-				success: false,
-				error: "No such user exists",
-			});
+			return next(new ErrorResponse("No such user exists", 200));
+			// res.status(404).send({
+			// 	success: false,
+			// 	error: "No such user exists",
+			// });
 		}
 		console.log(getuser);
 
@@ -142,7 +142,7 @@ const loginUser = async (req, res, next) => {
 		if (auth) {
 			sendLoginToken(getuser, 200, res);
 		} else {
-			return next(new ErrorResponse("Wrong Credentials", 401));
+			return next(new ErrorResponse("Wrong Credentials", 200));
 		}
 	} catch (err) {
 		next(err);
