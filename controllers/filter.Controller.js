@@ -2,6 +2,7 @@ const File = require("../models/file.Schema");
 
 const filterResults = async (req, res, next) => {
 	const { Institute, Year, Semester, Department } = req.body;
+	console.log(Institute, Year, Semester, Department);
 
 	try {
 		// File
