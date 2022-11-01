@@ -20,7 +20,7 @@ const authSchema = mongoose.Schema(
 
 		isVerified: {
 			type: Boolean,
-			default: false,
+			default: true,
 		},
 
 		password: {

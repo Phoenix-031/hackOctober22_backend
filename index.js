@@ -9,6 +9,7 @@ const authRoutes = require("./routes/auth.routes");
 const fileRoutes = require("./routes/file.routes");
 const userRoutes = require("./routes/user.routes");
 const listRoutes = require("./routes/general.routes");
+const filterRoutes = require("./routes/filter.routes");
 
 const errorHandler = require("./middlewares/error.middleware");
 
@@ -39,6 +40,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/files", fileRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/list", listRoutes);
+app.use("/api/filter", filterRoutes);
 // app.get("*", checkUser); // using checkUser middleware for checking current user
 
 app.use(errorHandler);
